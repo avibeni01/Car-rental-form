@@ -208,7 +208,7 @@ const filterCountryOptions = (option: { label: string; value: string }, inputVal
   };
 
   const validateStep2 = () => {
-    return true; // Vehicle selection is optional for now
+    return selectedVehicle !== null; // Make vehicle selection required
   };
 
   const validateFinalStep = () => {
@@ -219,8 +219,12 @@ const filterCountryOptions = (option: { label: string; value: string }, inputVal
   const handleNextStep = () => {
     if (currentStep === 1 && validateStep1()) {
       setCurrentStep(2);
-    } else if (currentStep === 2 && validateStep2()) {
-      setCurrentStep(3);
+    } else if (currentStep === 2) {
+      if (validateStep2()) {
+        setCurrentStep(3);
+      } else {
+        toast.error("Veuillez sélectionner un véhicule avant de continuer");
+      }
     }
   };
 
